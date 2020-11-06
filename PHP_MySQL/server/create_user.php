@@ -14,70 +14,72 @@
   #password_hash(, PASSWORD_DEFAULT);
   #password_verify($_POST['passw'], $fila['psw']);
 
-  #################### Creating User 1
+  if ($message == 'OK'){
 
-  $email = "'jps@mail.com'";
-  $nombre = "'Juan Perez S'";
-  $passwd = "'".password_hash('12345678', PASSWORD_DEFAULT)."'";
-  $birth_date = "'1989-09-11'";
+    #################### Creating User 1
 
-  $user =['email' => $email,
-          'nombre_completo' => $nombre,
-          'password' => $passwd ,
-          'fecha_nacimiento' => $birth_date];
+    $email = "'jps@mail.com'";
+    $nombre = "'Juan Perez S'";
+    $passwd = "'".password_hash('12345678', PASSWORD_DEFAULT)."'";
+    $birth_date = "'1989-09-11'";
 
-  $query = $con->insertUsers($user);
+    $user =['email' => $email,
+            'nombre_completo' => $nombre,
+            'password' => $passwd ,
+            'fecha_nacimiento' => $birth_date];
 
-  echo "Creando usuario: ".$email."<br>";
-  echo $query."<br><br>";
+    $query = $con->insertUsers($user);
 
-  if(!$con->ejecutarQuery($query)){
-	  echo "Error en creación de usuario <b>".$email."</b>!<br><br>";
-  };
+    echo "Creando usuario: ".$email."<br>";
+    echo $query."<br><br>";
 
-  #################### Creating User 2
+    if(!$con->ejecutarQuery($query)){
+  	  echo "Error en creación de usuario <b>".$email."</b>!<br><br>";
+    };
 
-  $email = "'klc@mail.com'";
-  $nombre = "'Karla Luisa C'";
-  $passwd = "'".password_hash('12345', PASSWORD_DEFAULT)."'";
-  $birth_date = "'1999-06-23'";
+    #################### Creating User 2
 
-  $user =['email' => $email,
-          'nombre_completo' => $nombre,
-          'password' => $passwd ,
-          'fecha_nacimiento' => $birth_date];
+    $email = "'klc@mail.com'";
+    $nombre = "'Karla Luisa C'";
+    $passwd = "'".password_hash('12345', PASSWORD_DEFAULT)."'";
+    $birth_date = "'1999-06-23'";
 
-  $query = $con->insertUsers($user);
+    $user =['email' => $email,
+            'nombre_completo' => $nombre,
+            'password' => $passwd ,
+            'fecha_nacimiento' => $birth_date];
 
-  echo "Creando usuario: ".$email."<br>";
-  echo $query."<br><br>";
-#  $con->ejecutarQuery($query);
+    $query = $con->insertUsers($user);
 
-  if(!$con->ejecutarQuery($query)){
-	  echo "Error en creación de usuario <b>".$email."</b>!<br><br>";
-  };
+    echo "Creando usuario: ".$email."<br>";
+    echo $query."<br><br>";
+  #  $con->ejecutarQuery($query);
 
-  #################### Creating User 3
+    if(!$con->ejecutarQuery($query)){
+  	  echo "Error en creación de usuario <b>".$email."</b>!<br><br>";
+    };
 
-  $email = "'mmr@mail.com'";
-  $nombre = "'Manuel Martin R'";
-  $passwd = "'".password_hash('123456789', PASSWORD_DEFAULT)."'";
-  $birth_date = "'1985-01-15'";
+    #################### Creating User 3
 
-  $user =['email' => $email,
-          'nombre_completo' => $nombre,
-          'password' => $passwd ,
-          'fecha_nacimiento' => $birth_date];
+    $email = "'mmr@mail.com'";
+    $nombre = "'Manuel Martin R'";
+    $passwd = "'".password_hash('123456789', PASSWORD_DEFAULT)."'";
+    $birth_date = "'1985-01-15'";
 
-  $query = $con->insertUsers($user);
+    $user =['email' => $email,
+            'nombre_completo' => $nombre,
+            'password' => $passwd ,
+            'fecha_nacimiento' => $birth_date];
 
-  echo "Creando usuario: ".$email."<br>";
-  echo $query."<br><br>";
+    $query = $con->insertUsers($user);
 
-  if(!$con->ejecutarQuery($query)){
-	  echo "Error en creación de usuario <b>".$email."</b>!<br><br>";
-  };
+    echo "Creando usuario: ".$email."<br>";
+    echo $query."<br><br>";
 
+    if(!$con->ejecutarQuery($query)){
+  	  echo "Error en creación de usuario <b>".$email."</b>!<br><br>";
+    };
 
+  }
 
  ?>

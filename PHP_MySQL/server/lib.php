@@ -24,6 +24,11 @@ class ConectorBD
     }
   }
 
+  # Function to close connection
+  function cerrarConexion(){
+    $this->conexion->close();
+  }
+
   # Function to execute a query
   function ejecutarQuery($query){
     return $this->conexion->query($query);
@@ -53,6 +58,12 @@ class ConectorBD
     return $sql;
     #return $this->ejecutarQuery($sql);
 
+  }
+
+  function checkLogin($user){
+    $sql = 'SELECT email,password from users where email = ';
+    $sql .= "'".$user."';";
+    return $this->ejecutarQuery($sql);
   }
 
 }
