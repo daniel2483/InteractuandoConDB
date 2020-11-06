@@ -60,9 +60,16 @@ class ConectorBD
 
   }
 
+  # Query to Check if the user exists
   function checkLogin($user){
-    $sql = 'SELECT email,password from users where email = ';
+    $sql = 'SELECT id,email,password from users where email = ';
     $sql .= "'".$user."';";
+    return $this->ejecutarQuery($sql);
+  }
+
+  function getEvents($userId){
+    $sql = 'SELECT * from evento where user_id = ';
+    $sql .= "'".$userId."';";
     return $this->ejecutarQuery($sql);
   }
 

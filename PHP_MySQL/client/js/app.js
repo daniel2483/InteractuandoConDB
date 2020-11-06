@@ -21,11 +21,11 @@ class EventsManager {
               this.poblarCalendario(data.eventos)
             }else {
               alert(data.msg)
-              window.location.href = 'index.html';
+              //window.location.href = 'index.html';
             }
           },
           error: function(){
-            alert("error en la comunicación con el servidor");
+            alert("Error en la comunicación con el servidor");
           }
         })
 
