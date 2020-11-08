@@ -17,15 +17,22 @@ class EventsManager {
           contentType: false,
           type: 'GET',
           success: (data) =>{
-            if (data.msg=="OK") {
-              this.poblarCalendario(data.eventos)
+            if (data.UserId){
+              if (!data.Events){
+                alert(data.EventMessage);
+                this.poblarCalendario(data.eventos)
+              }
+              else{
+                this.poblarCalendario(data.eventos)
+              }
             }else {
-              alert(data.msg)
-              //window.location.href = 'index.html';
+              alert("User is not logged...");
+              window.location.href = 'index.html';
             }
           },
           error: function(){
             alert("Error en la comunicación con el servidor");
+            window.location.href = 'index.html';
           }
         })
 

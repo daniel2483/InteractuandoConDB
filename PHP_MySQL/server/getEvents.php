@@ -18,19 +18,23 @@
 
   if ($user_events->num_rows != 0) {
     $events_data['EventMessage'] = 'There are events';
+    //$evento = $user_events->fetch_assoc();
+    //$events_data['Events'][0]['titulo']=$evento['titulo'];
+    $i = 0;
     while ($evento = $user_events->fetch_assoc()) {
-      $response['Events'][$i]['titulo']=$evento['titulo'];
-      $response['Events'][$i]['fecha_inicio']=$evento['fecha_inicio'];
-      $response['Events'][$i]['hora_inicio']=$evento['hora_inicio'];
-      $response['Events'][$i]['fecha_fin']=$evento['fecha_fin'];
-      $response['Events'][$i]['hora_fin']=$evento['hora_fin'];
-      $response['Events'][$i]['dia_completo']=$evento['dia_completo'];
+      //$events_data['Test'] = 'TEST';
+      $events_data['Events'][$i]['titulo']=$evento['titulo'];
+      $events_data['Events'][$i]['fecha_inicio']=$evento['fecha_inicio'];
+      $events_data['Events'][$i]['hora_inicio']=$evento['hora_inicio'];
+      $events_data['Events'][$i]['fecha_fin']=$evento['fecha_fin'];
+      $events_data['Events'][$i]['hora_fin']=$evento['hora_fin'];
+      $events_data['Events'][$i]['dia_completo']=$evento['dia_completo'];
       $i++;
     }
     $events_data['msg'] = $events_data['DBCon'];
   }
   else{
-    $events_data['EventMessage'] = 'There are no events';
+    $events_data['EventMessage'] = 'There are no events for '.$_SESSION['username'];
     $events_data['msg'] = $events_data['DBCon'];
   }
 
