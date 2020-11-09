@@ -31,8 +31,10 @@
 
       if($evento['dia_completo'] == 1){
         $events_data['EventType']="Día Completo";
-        $events_data['Events'][$i]['start']=$evento['fecha_inicio']."T00:00:00";
-        $events_data['Events'][$i]['end']=$evento['fecha_inicio']."T23:59:59";
+        $events_data['Events'][$i]['start']=$evento['fecha_inicio'];
+        $events_data['Events'][$i]['allDay']=true;
+
+        //$events_data['Events'][$i]['end']=$evento['fecha_inicio']."T23:59:59";
       }
       else{
         $events_data['EventType']="Rango de Fecha y hora";

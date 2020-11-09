@@ -105,6 +105,7 @@ class EventsManager {
         form_data.append('end_hour', "")
         form_data.append('start_hour', "")
       }
+      //console.log(form_data);
       $.ajax({
         url: '../server/new_event.php',
         dataType: "json",
@@ -131,15 +132,12 @@ class EventsManager {
               })
             }
 
-
-
-
           }else {
             alert(data.msg)
           }
         },
         error: function(){
-          alert("error en la comunicación con el servidor");
+          alert("Error en la comunicación con el servidor");
         }
       })
 
