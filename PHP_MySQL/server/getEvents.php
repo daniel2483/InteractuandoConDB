@@ -18,17 +18,27 @@
 
   if ($user_events->num_rows != 0) {
     $events_data['EventMessage'] = 'There are events';
+    //////////////// For testing
     //$evento = $user_events->fetch_assoc();
-    //$events_data['Events'][0]['titulo']=$evento['titulo'];
+    //$events_data['Events'][0]['title']=$evento['titulo'];
+    //$events_data['Events'][0]['start']='2020-11-07T11:00:00';
+    //$events_data['Events'][0]['end']='2020-11-07T12:00:00';
+
     $i = 0;
     while ($evento = $user_events->fetch_assoc()) {
       //$events_data['Test'] = 'TEST';
-      $events_data['Events'][$i]['titulo']=$evento['titulo'];
-      $events_data['Events'][$i]['fecha_inicio']=$evento['fecha_inicio'];
-      $events_data['Events'][$i]['hora_inicio']=$evento['hora_inicio'];
-      $events_data['Events'][$i]['fecha_fin']=$evento['fecha_fin'];
-      $events_data['Events'][$i]['hora_fin']=$evento['hora_fin'];
-      $events_data['Events'][$i]['dia_completo']=$evento['dia_completo'];
+      $events_data['Events'][$i]['title']=$evento['titulo'];
+
+      if($evento['dia_completo'] == 1){
+        $events_data['EventType']="Día Completo";
+        $events_data['Events'][$i]['start']=$evento['fecha_inicio']."T00:00:00";
+        $events_data['Events'][$i]['end']=$evento['fecha_inicio']."T23:59:59";
+      }
+      else{
+        $events_data['EventType']="Rango de Fecha y hora";
+        $events_data['Events'][$i]['start']=$evento['fecha_inicio']."T".$evento['hora_inicio'];
+        $events_data['Events'][$i]['end']=$evento['fecha_fin']."T".$evento['hora_fin'];
+      }
       $i++;
     }
     $events_data['msg'] = $events_data['DBCon'];

@@ -17,13 +17,15 @@ class EventsManager {
           contentType: false,
           type: 'GET',
           success: (data) =>{
+            console.log("Tipo Evento: "+data.EventType);
             if (data.UserId){
               if (!data.Events){
                 alert(data.EventMessage);
-                this.poblarCalendario(data.eventos)
+                this.poblarCalendario(data.Events)
               }
               else{
-                this.poblarCalendario(data.eventos)
+                console.log(data.Events);
+                this.poblarCalendario(data.Events)
               }
             }else {
               alert("User is not logged...");
@@ -39,13 +41,24 @@ class EventsManager {
     }
 
     poblarCalendario(eventos) {
+
+      // Get current date
+      var d = new Date();
+      var month = d.getMonth()+1;
+      var day = d.getDate();
+      if (day<10){day = '0'+day;}
+      var year = d.getFullYear();
+      var full_date = year+'-'+month+'-'+day;
+
+      //console.log(full_date);
+
         $('.calendario').fullCalendar({
             header: {
         		left: 'prev,next today',
         		center: 'title',
         		right: 'month,agendaWeek,basicDay'
         	},
-        	defaultDate: '2016-11-01',
+        	defaultDate: full_date,
         	navLinks: true,
         	editable: true,
         	eventLimit: true,
@@ -55,6 +68,7 @@ class EventsManager {
           eventDrop: (event) => {
               this.actualizarEvento(event)
           },
+          //events: [{title:'TEST',start:'2020-11-06T10:30:00',end:'2020-11-06T11:30:00'}],
           events: eventos,
           eventDragStart: (event,jsEvent) => {
             $('.delete-btn').find('img').attr('src', "img/trash-open.png");
