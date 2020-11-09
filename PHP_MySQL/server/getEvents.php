@@ -27,7 +27,9 @@
     $i = 0;
     while ($evento = $user_events->fetch_assoc()) {
       //$events_data['Test'] = 'TEST';
+      $events_data['Events'][$i]['id']=$evento['id'];
       $events_data['Events'][$i]['title']=$evento['titulo'];
+
 
       if($evento['dia_completo'] == 1){
         $events_data['EventType']="Día Completo";

@@ -76,12 +76,18 @@ class ConectorBD
   function newEvents($userId,$allDay,$titulo,$fecha_inicio,$hora_inicio,$fecha_fin,$hora_fin){
     if($allDay == 'true'){
       $sql = 'INSERT INTO evento (titulo,fecha_inicio,dia_completo,user_id) VALUES';
-      $sql .= '('.$titulo.','.$fecha_inicio.',1,'.$userId.')';
+      $sql .= '('.$titulo.','.$fecha_inicio.',1,'.$userId.');';
     }
     else{
       $sql = 'INSERT INTO evento (titulo,fecha_inicio,hora_inicio,fecha_fin,hora_fin,dia_completo,user_id) VALUES';
-      $sql .= '('.$titulo.','.$fecha_inicio.','.$hora_inicio.','.$fecha_fin.','.$hora_fin.',0,'.$userId.')';
+      $sql .= '('.$titulo.','.$fecha_inicio.','.$hora_inicio.','.$fecha_fin.','.$hora_fin.',0,'.$userId.');';
     }
+    //echo $sql;
+    $this->ejecutarQuery($sql);
+  }
+
+  function deleteEvent($event_id){
+    $sql ='DELETE FROM evento WHERE id='.$event_id.";";
     //echo $sql;
     $this->ejecutarQuery($sql);
   }

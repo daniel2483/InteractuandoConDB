@@ -18,6 +18,8 @@
 
   $new_event['UserId'] = $fila_user['id'];
 
+
+  //////////////////////////////// Adding the new event ////////////////////////////////////////
   $allDay = "'".$_POST['allDay']."'";
   $titulo = "'".$_POST['titulo']."'";
   $fecha_inicio = "'".$_POST['start_date']."'";
