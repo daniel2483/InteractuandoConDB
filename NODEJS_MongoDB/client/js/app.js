@@ -81,13 +81,22 @@ class EventManager {
     }
 
     inicializarCalendario(eventos) {
+
+      // Get current date
+      var d = new Date();
+      var month = d.getMonth()+1;
+      var day = d.getDate();
+      if (day<10){day = '0'+day;}
+      var year = d.getFullYear();
+      var full_date = year+'-'+month+'-'+day;
+
         $('.calendario').fullCalendar({
             header: {
                 left: 'prev,next today',
                 center: 'title',
                 right: 'month,agendaWeek,basicDay'
             },
-            defaultDate: '2016-11-01',
+            defaultDate: full_date,
             navLinks: true,
             editable: true,
             eventLimit: true,
