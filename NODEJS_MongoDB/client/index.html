@@ -26,11 +26,15 @@
         $('.loginButton').on('click', function(event) {
 
             if (nombreUsuario.val() != "" && pass.val() != "") {
-              console.log("User: "+nombreUsuario.val());
-              console.log("Password: "+pass.val());
-                $.get('/login',{user: nombreUsuario.val(), pass: pass.val()}, function(response) {
+                $.post('/login',{user: nombreUsuario.val(), pass: pass.val()}, function(response) {
+                    //console.log("User: "+nombreUsuario.val());
+                    //console.log("Password: "+pass.val());
+                    //response = 1;
                     if (response != null) {
                         window.location.href = "http://localhost:8082/main.html"
+                    }
+                    else{
+                      alert("El usuario ingresado " + nombreUsuario.val() +" no se encuentra registrado en la base de datos.O contraseña inválida.")
                     }
                 })
             } else {

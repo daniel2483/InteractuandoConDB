@@ -1,22 +1,34 @@
 const Router = require('express').Router();
 const Events = require('./events_model.js')
-const User = require('./user_model.js')
+const Users = require('./user_model.js')
 
-//Obtener User
-Router.get('/login/:email/:pass', function(req, res) {
-    let user_email = req.params.email;
-    let user_password = req.params.pass;
-    User.findOne({email:user_email,password:user_password}).exec(function(err, docs) {
+//Login access
+Router.post('/login', function(req, res) {
+
+    let user_email = req.body.user;
+    let user_password = req.body.pass;
+    console.log(user_email);
+    console.log(user_password);
+
+    Users.findOne({email:user_email,password:user_password}).exec(function(err, docs) {
         if (err) {
             res.status(500)
             res.json(err)
         }
         res.json(docs)
+        //console.log(res.json(docs));
     })
 })
 
+//Handling user logout
+Router.get("/logout", function (req, res) {
+    req.logout();
+    res.redirect("/");
+});
+
+
 //Obtener todos los eventos
-Router.get('/all', function(req, res) {
+Router.get('/events/all', function(req, res) {
     Events.find({}).exec(function(err, docs) {
         if (err) {
             res.status(500)
@@ -26,20 +38,8 @@ Router.get('/all', function(req, res) {
     })
 })
 
-// Obtener id de un usuario
-Router.get('/', function(req, res) {
-    let email = req.query.email
-    Events.findOne({email: email}).exec(function(err, doc){
-        if (err) {
-            res.status(500)
-            res.json(err)
-        }
-        res.json(doc)
-    })
-})
-
 // Agregar a un nuevo evento
-Router.post('/new', function(req, res) {
+Router.post('events/new', function(req, res) {
     let evento = new Eventos({
         eventoId: Math.floor(Math.random() * 50),
         titulo: req.body.titulo,
