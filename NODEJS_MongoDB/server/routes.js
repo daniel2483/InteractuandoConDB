@@ -1,9 +1,12 @@
 const Router = require('express').Router();
-const Users = require('./model.js')
+const Events = require('./events_model.js')
+const User = require('./user_model.js')
 
-//Obtener todos los usuarios
-Router.get('/all', function(req, res) {
-    Users.find({}).exec(function(err, docs) {
+//Obtener User
+Router.get('/login/:email/:pass', function(req, res) {
+    let user_email = req.params.email;
+    let user_password = req.params.pass;
+    User.findOne({email:user_email,password:user_password}).exec(function(err, docs) {
         if (err) {
             res.status(500)
             res.json(err)
@@ -12,10 +15,21 @@ Router.get('/all', function(req, res) {
     })
 })
 
-// Obtener un usuario por su id
+//Obtener todos los eventos
+Router.get('/all', function(req, res) {
+    Events.find({}).exec(function(err, docs) {
+        if (err) {
+            res.status(500)
+            res.json(err)
+        }
+        res.json(docs)
+    })
+})
+
+// Obtener id de un usuario
 Router.get('/', function(req, res) {
-    let nombre = req.query.nombre
-    Users.findOne({nombres: nombre}).exec(function(err, doc){
+    let email = req.query.email
+    Events.findOne({email: email}).exec(function(err, doc){
         if (err) {
             res.status(500)
             res.json(err)
@@ -24,45 +38,37 @@ Router.get('/', function(req, res) {
     })
 })
 
-// Agregar a un usuario
+// Agregar a un nuevo evento
 Router.post('/new', function(req, res) {
-    let user = new Users({
-        userId: Math.floor(Math.random() * 50),
-        nombres: req.body.nombres,
-        apellidos: req.body.apellidos,
-        edad: req.body.edad,
-        sexo: req.body.sexo,
-        estado: "Activo"
+    let evento = new Eventos({
+        eventoId: Math.floor(Math.random() * 50),
+        titulo: req.body.titulo,
+        fecha_inicio: req.body.fecha_inicio,
+        hora_inicio: req.body.hora_inicio,
+        fecha_fin: req.body.fecha_fin,
+        hora_fin: req.body.fecha_fin,
+        dia_completo: req.body.fecha_fin,
+        user_id: req.body.user_id,
     })
-    user.save(function(error) {
+    Events.save(function(error) {
         if (error) {
             res.status(500)
             res.json(error)
         }
-        res.send("Registro guardado")
+        res.send("Evento guardado")
     })
 })
 
 // Eliminar un usuario por su id
-Router.get('/delete/:id', function(req, res) {
+Router.post('/events/delete/:id', function(req, res) {
     let uid = req.params.id
-    Users.remove({userId: uid}, function(error) {
+    Events.remove({userId: uid}, function(error) {
         if(error) {
             res.status(500)
             res.json(error)
         }
-        res.send("Registro eliminado")
+        res.send("Evento eliminado")
     })
-})
-
-// Inactivar un usuario por su id
-Router.post('/inactive/:id', function(req, res) {
-
-})
-
-// Activar un usuario por su id
-Router.post('/active/:id', function(req, res) {
-
 })
 
 module.exports = Router

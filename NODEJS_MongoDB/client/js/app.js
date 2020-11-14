@@ -1,4 +1,6 @@
 
+
+//////////////////// Class
 class EventManager {
     constructor() {
         this.urlBase = "/events"
@@ -64,7 +66,7 @@ class EventManager {
             timeFormat: 'HH:mm:ss',
             interval: 30,
             minTime: '5',
-            maxTime: '23:59:59',
+            maxTime: '23:30:00',
             defaultTime: '',
             startTime: '5:00',
             dynamic: false,
@@ -128,4 +130,5 @@ class EventManager {
         }
     }
 
+    // Contruct the calendar
     const Manager = new EventManager()

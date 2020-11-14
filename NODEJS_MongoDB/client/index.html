@@ -20,13 +20,17 @@
     </div>
     <script src="js/jquery.js"></script>
     <script>
-        var nombreUsuario = $('#user')
-        var pass = $('#pass')
+        var nombreUsuario = $('#user');
+        var pass = $('#pass');
+
         $('.loginButton').on('click', function(event) {
+
             if (nombreUsuario.val() != "" && pass.val() != "") {
-                $.post('/login',{user: nombreUsuario.val(), pass: pass.val()}, function(response) {
-                    if (response == "Validado") {
-                        window.location.href = "http://localhost:3000/main.html"
+              console.log("User: "+nombreUsuario.val());
+              console.log("Password: "+pass.val());
+                $.get('/login',{user: nombreUsuario.val(), pass: pass.val()}, function(response) {
+                    if (response != null) {
+                        window.location.href = "http://localhost:8082/main.html"
                     }
                 })
             } else {
