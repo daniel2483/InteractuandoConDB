@@ -20,8 +20,9 @@ class Login {
     var usuario = $('#user').val();
     var contrasenia = $('#password').val();
 
-    console.log(usuario);
-    console.log(contrasenia);
+    // For testing
+    //console.log(usuario);
+    //console.log(contrasenia);
     //form_data.append('username', $('#user').val())
     //form_data.append('password', $('#password').val())
     //console.log(form_data);

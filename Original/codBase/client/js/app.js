@@ -1,6 +1,4 @@
 
-
-//////////////////// Class
 class EventManager {
     constructor() {
         this.urlBase = "/events"
@@ -10,22 +8,17 @@ class EventManager {
     }
 
     obtenerDataInicial() {
-        //console.log("Getting parameters: " + jQuery.param(email));
-        let url = this.urlBase + "/all";
-        let email = $('#email').val();
-        $.get(url,{email: email}, (response) => {
-            //console.console.log(response.eventoId);
+        let url = this.urlBase + "/all"
+        $.get(url, (response) => {
             this.inicializarCalendario(response)
         })
     }
 
     eliminarEvento(evento) {
         let eventId = evento.id
-
-        $.post('/events/delete/'+eventId, (response) => {
+        $.post('/events/delete/'+eventId, {id: eventId}, (response) => {
             alert(response)
         })
-
     }
 
     guardarEvento() {
@@ -36,8 +29,7 @@ class EventManager {
             title = $('#titulo').val(),
             end = '',
             start_hour = '',
-            end_hour = '',
-            email = $('#email').val();
+            end_hour = '';
 
             if (!$('#allDay').is(':checked')) {
                 end = $('#end_date').val()
@@ -46,15 +38,14 @@ class EventManager {
                 start = start + 'T' + start_hour
                 end = end + 'T' + end_hour
             }
-            let url = this.urlBase + "/new?allday="+$('#allDay').is(':checked');
+            let url = this.urlBase + "/new"
             if (title != "" && start != "") {
                 let ev = {
                     title: title,
                     start: start,
-                    end: end,
-                    email:email,
+                    end: end
                 }
-                $.get(url, ev, (response) => {
+                $.post(url, ev, (response) => {
                     alert(response)
                 })
                 $('.calendario').fullCalendar('renderEvent', ev)
@@ -73,7 +64,7 @@ class EventManager {
             timeFormat: 'HH:mm:ss',
             interval: 30,
             minTime: '5',
-            maxTime: '23:30:00',
+            maxTime: '23:59:59',
             defaultTime: '',
             startTime: '5:00',
             dynamic: false,
@@ -90,22 +81,13 @@ class EventManager {
     }
 
     inicializarCalendario(eventos) {
-
-      // Get current date
-      var d = new Date();
-      var month = d.getMonth()+1;
-      var day = d.getDate();
-      if (day<10){day = '0'+day;}
-      var year = d.getFullYear();
-      var full_date = year+'-'+month+'-'+day;
-
         $('.calendario').fullCalendar({
             header: {
                 left: 'prev,next today',
                 center: 'title',
                 right: 'month,agendaWeek,basicDay'
             },
-            defaultDate: full_date,
+            defaultDate: '2016-11-01',
             navLinks: true,
             editable: true,
             eventLimit: true,
@@ -117,7 +99,7 @@ class EventManager {
             },
             events: eventos,
             eventDragStart: (event,jsEvent) => {
-                $('.delete').find('img').attr('src', "../img/trash-open.png");
+                $('.delete').find('img').attr('src', "img/trash-open.png");
                 $('.delete').css('background-color', '#a70f19')
             },
             eventDragStop: (event,jsEvent) => {
@@ -130,14 +112,11 @@ class EventManager {
                 if (jsEvent.pageX >= x1 && jsEvent.pageX<= x2 &&
                     jsEvent.pageY >= y1 && jsEvent.pageY <= y2) {
                         this.eliminarEvento(event)
-                        //console.log(event.id)
-                        let eventoID =  event.id;
-                        $('.calendario').fullCalendar('removeEvents', eventoID);
+                        $('.calendario').fullCalendar('removeEvents', event.id);
                     }
                 }
             })
         }
     }
 
-    // Contruct the calendar
     const Manager = new EventManager()

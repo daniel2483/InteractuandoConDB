@@ -38,7 +38,7 @@ Router.get('/events/new/', function(req, res) {
     //console.log(req.query.allDay);
 
     let evento = new Events({
-        id: Math.floor(Math.random() * 50),
+        id: Math.floor(Math.random() * 100),
         title: req.query.title,
         start: req.query.start,
         end: req.query.end,
@@ -58,8 +58,9 @@ Router.get('/events/new/', function(req, res) {
 
 // Eliminar un usuario por su id
 Router.post('/events/delete/:id', function(req, res) {
-    let uid = req.params.id
-    Events.remove({userId: uid}, function(error) {
+    let eventId = req.params.id;
+    console.log(eventId)
+    Events.deleteOne({id: eventId}, function(error) {
         if(error) {
             res.status(500)
             res.json(error)
@@ -76,7 +77,7 @@ Router.post('/events/update/:id', function(req, res) {
             res.status(500)
             res.json(error)
         }
-        res.send("Evento eliminado")
+        res.send("Evento actualizado")
     })
 })
 
