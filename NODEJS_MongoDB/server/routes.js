@@ -4,12 +4,10 @@ const Users = require('./user_model.js')
 
 //Login access
 Router.post('/login', function(req, res) {
-
     let user_email = req.body.user;
     let user_password = req.body.pass;
-    console.log(user_email);
-    console.log(user_password);
-
+    //console.log(user_email);
+    //console.log(user_password);
     Users.findOne({email:user_email,password:user_password}).exec(function(err, docs) {
         if (err) {
             res.status(500)
@@ -20,16 +18,12 @@ Router.post('/login', function(req, res) {
     })
 })
 
-//Handling user logout
-Router.get("/logout", function (req, res) {
-    req.logout();
-    res.redirect("/");
-});
-
 
 //Obtener todos los eventos
-Router.get('/events/all', function(req, res) {
-    Events.find({}).exec(function(err, docs) {
+Router.get('/events/all/', function(req, res) {
+    let emailUser = req.query.email;
+    //console.log(emailUser);
+    Events.find({user:emailUser}).exec(function(err, docs) {
         if (err) {
             res.status(500)
             res.json(err)
@@ -39,18 +33,21 @@ Router.get('/events/all', function(req, res) {
 })
 
 // Agregar a un nuevo evento
-Router.post('events/new', function(req, res) {
-    let evento = new Eventos({
-        eventoId: Math.floor(Math.random() * 50),
-        titulo: req.body.titulo,
-        fecha_inicio: req.body.fecha_inicio,
-        hora_inicio: req.body.hora_inicio,
-        fecha_fin: req.body.fecha_fin,
-        hora_fin: req.body.fecha_fin,
-        dia_completo: req.body.fecha_fin,
-        user_id: req.body.user_id,
+Router.get('/events/new/', function(req, res) {
+    //console.log(Boolean(req.body.allDay));
+    //console.log(req.query.allDay);
+
+    let evento = new Events({
+        id: Math.floor(Math.random() * 50),
+        title: req.query.title,
+        start: req.query.start,
+        end: req.query.end,
+        allday: req.query.allday,
+        user: req.query.email,
     })
-    Events.save(function(error) {
+    //console.log("Titulo: "+req.body.titulo);
+    //console.log("Fecha Inicio: "+req.body.start_date);
+    evento.save(function(error) {
         if (error) {
             res.status(500)
             res.json(error)
@@ -61,6 +58,18 @@ Router.post('events/new', function(req, res) {
 
 // Eliminar un usuario por su id
 Router.post('/events/delete/:id', function(req, res) {
+    let uid = req.params.id
+    Events.remove({userId: uid}, function(error) {
+        if(error) {
+            res.status(500)
+            res.json(error)
+        }
+        res.send("Evento eliminado")
+    })
+})
+
+// Actualizar un usuario por su id
+Router.post('/events/update/:id', function(req, res) {
     let uid = req.params.id
     Events.remove({userId: uid}, function(error) {
         if(error) {

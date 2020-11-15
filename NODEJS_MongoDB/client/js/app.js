@@ -10,8 +10,11 @@ class EventManager {
     }
 
     obtenerDataInicial() {
-        let url = this.urlBase + "/all"
-        $.get(url, (response) => {
+        //console.log("Getting parameters: " + jQuery.param(email));
+        let url = this.urlBase + "/all";
+        let email = $('#email').val();
+        $.get(url,{email: email}, (response) => {
+            //console.console.log(response.eventoId);
             this.inicializarCalendario(response)
         })
     }
@@ -31,7 +34,8 @@ class EventManager {
             title = $('#titulo').val(),
             end = '',
             start_hour = '',
-            end_hour = '';
+            end_hour = '',
+            email = $('#email').val();
 
             if (!$('#allDay').is(':checked')) {
                 end = $('#end_date').val()
@@ -40,14 +44,15 @@ class EventManager {
                 start = start + 'T' + start_hour
                 end = end + 'T' + end_hour
             }
-            let url = this.urlBase + "/new"
+            let url = this.urlBase + "/new?allday="+$('#allDay').is(':checked');
             if (title != "" && start != "") {
                 let ev = {
                     title: title,
                     start: start,
-                    end: end
+                    end: end,
+                    email:email,
                 }
-                $.post(url, ev, (response) => {
+                $.get(url, ev, (response) => {
                     alert(response)
                 })
                 $('.calendario').fullCalendar('renderEvent', ev)

@@ -31,10 +31,11 @@
                     //console.log("Password: "+pass.val());
                     //response = 1;
                     if (response != null) {
-                        window.location.href = "http://localhost:8082/main.html"
+                        //Cookies.set('email', nombreUsuario.val());
+                        window.location.href = "http://localhost:8082/main.html?email="+nombreUsuario.val();
                     }
                     else{
-                      alert("El usuario ingresado " + nombreUsuario.val() +" no se encuentra registrado en la base de datos.O contraseña inválida.")
+                      alert("El usuario ingresado " + nombreUsuario.val() +" no se encuentra registrado en la base de datos. O contraseña inválida.")
                     }
                 })
             } else {
