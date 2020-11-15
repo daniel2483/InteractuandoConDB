@@ -92,6 +92,26 @@ class ConectorBD
     $this->ejecutarQuery($sql);
   }
 
+  function getType($event_id){
+    $sql = 'SELECT dia_completo from evento where id = ';
+    $sql .= "'".$event_id."';";
+    return $this->ejecutarQuery($sql);
+  }
+
+  function updateEvent($event_id,$start_date,$start_hour,$end_date,$end_hour,$all_day){
+    if ($all_day == 0){
+      $sql ='UPDATE evento SET fecha_inicio='.$start_date.', hora_inicio ='.$start_hour.', fecha_fin='.$end_date.', hora_fin='.$end_hour;
+      $sql .= " WHERE id=".$event_id.";";
+    }
+    else{
+      $sql ='UPDATE evento SET fecha_inicio='.$start_date;
+      $sql .= " WHERE id=".$event_id.";";
+    }
+
+    //echo $sql;
+    $this->ejecutarQuery($sql);
+  }
+
 }
 
 

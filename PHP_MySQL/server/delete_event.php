@@ -1,8 +1,6 @@
 <?php
 
   require('./lib.php');
-  #error_reporting(0);
-  session_start();
 
   # Connecting to MySQL
   $con = new ConectorBD('localhost','nextu','12345');
@@ -15,7 +13,7 @@
   //////////////////////////////// Deleting an event ////////////////////////////////////////
   #  For debugging
   $delete_event['id'] = $_POST['id'];
-  
+
   # Deleting the Event
   $con->deleteEvent($_POST['id']);
 

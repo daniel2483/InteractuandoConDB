@@ -20,12 +20,38 @@ class EventManager {
     }
 
     eliminarEvento(evento) {
-        let eventId = evento.id
-
-        $.post('/events/delete/'+eventId, (response) => {
+        let eventId = evento._id
+        $.post('/events/update/'+eventId, (response) => {
             alert(response)
         })
 
+    }
+
+    actualizarEvento(evento){
+      let eventId = evento.id,
+          start = moment(evento.start).format('YYYY-MM-DD HH:mm:ss'),
+          end = moment(evento.end).format('YYYY-MM-DD HH:mm:ss'),
+          start_date,
+          end_date,
+          start_hour,
+          end_hour
+
+          start_date = start.substr(0,10)
+          start_hour = start.substr(11,8)
+
+          if(evento.end != null ){
+            end_date = end.substr(0,10)
+            end_hour = end.substr(11,8)
+          }
+          else
+          {end_date = ''; end_hour='';}
+
+
+      console.log("Inicio: "+start_date+" Hora: "+start_hour);
+      console.log("Fin: "+end_date+" Hora: "+end_hour);
+      $.post('/events/update/'+eventId, {start:start_date+"T"+start_hour,end:end_date+"T"+end_hour}, (response) => {
+          alert(response)
+      })
     }
 
     guardarEvento() {
@@ -63,6 +89,8 @@ class EventManager {
             }
         })
     }
+
+    actu
 
     inicializarFormulario() {
         $('#start_date, #titulo, #end_date').val('');
@@ -130,14 +158,14 @@ class EventManager {
                 if (jsEvent.pageX >= x1 && jsEvent.pageX<= x2 &&
                     jsEvent.pageY >= y1 && jsEvent.pageY <= y2) {
                         this.eliminarEvento(event)
-                        //console.log(event.id)
-                        let eventoID =  event.id;
-                        $('.calendario').fullCalendar('removeEvents', eventoID);
+                        $('.calendario').fullCalendar('removeEvents', event._id);
                     }
                 }
             })
         }
     }
 
-    // Contruct the calendar
-    const Manager = new EventManager()
+    // Contruct the calendar View after rendering the complete html
+    window.onload = function(){
+      const Manager = new EventManager()
+    }

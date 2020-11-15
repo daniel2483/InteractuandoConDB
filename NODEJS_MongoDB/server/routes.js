@@ -59,7 +59,7 @@ Router.get('/events/new/', function(req, res) {
 // Eliminar un usuario por su id
 Router.post('/events/delete/:id', function(req, res) {
     let eventId = req.params.id;
-    console.log(eventId)
+    //console.log(eventId)
     Events.deleteOne({id: eventId}, function(error) {
         if(error) {
             res.status(500)
@@ -71,14 +71,16 @@ Router.post('/events/delete/:id', function(req, res) {
 
 // Actualizar un usuario por su id
 Router.post('/events/update/:id', function(req, res) {
-    let uid = req.params.id
-    Events.remove({userId: uid}, function(error) {
-        if(error) {
-            res.status(500)
-            res.json(error)
-        }
-        res.send("Evento actualizado")
+    let eventId = req.params.id
+    console.log(req.body.start);
+    Events.updateOne({id : eventId},{start:req.body.start,end:req.body.end},function(error){
+      if(error) {
+          res.status(500)
+          res.json(error)
+      }
+      res.send("Evento actualizado")
     })
+
 })
 
 module.exports = Router

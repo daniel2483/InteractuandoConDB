@@ -158,6 +158,7 @@ class EventsManager {
         success: (data) =>{
           if (data.msg=="OK") {
             alert('Se ha eliminado el evento exitosamente')
+            //$('#calendar').fullCalendar('removeEvents',event._id);
           }else {
             alert(data.msg)
           }
